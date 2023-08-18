@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.kios.mapper.UIInfoMapper">
+    <select id="getUiById" parameterType="com.example.kios.model.request.UIInfoRequest"
+            resultType="com.example.kios.model.response.UIInfoResponse">
+        select * from ui_info
+        where ui_mode_id = #{uiModeId}::uuid
+
+    </select>
+
+    <select id="getAll" parameterType="com.example.kios.model.request.UIInfoRequest"
+            resultType="com.example.kios.model.response.UIInfoResponse">
+        select * from ui_info
+
+    </select>
+
+    <update id="update" parameterType="com.example.kios.model.request.UIInfoRequest">
+        UPDATE ui_info
+        SET
+            "name" = #{name},
+            background_image = #{backgroundImage},
+            ui_mode_id = #{uiModeId}::uuid
+        WHERE id = #{id}::uuid
+    </update>
+
+    <select id="create" parameterType="com.example.kios.model.request.UIInfoRequest"
+        resultType="com.example.kios.model.response.UIInfoResponse">
+        INSERT INTO ui_info(
+            "name",
+            background_image,
+            ui_mode_id,
+            create_date
+        )VALUES(
+            #{name},
+            #{backgroundImage},
+            #{uiModeId},
+            NOW()
+        )
+        RETURNING *;
+    </select>
+
+    <delete id="delete" parameterType="com.example.kios.model.request.UIInfoRequest">
+        DELETE ui_info
+        WHERE id = #{id}::uuid
+    </delete>
+
+</mapper>

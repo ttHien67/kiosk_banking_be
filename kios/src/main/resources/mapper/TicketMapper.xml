@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.kios.mapper.TicketMapper">
+    <select id="get" parameterType="com.example.kios.model.request.TicketRequest"
+            resultType="com.example.kios.model.response.TicketResponse">
+        SELECT * from ticket
+        <where>
+            <if test="phone != null and phone !='' ">
+                and phone = #{phone}
+            </if>
+            <if test="code != null and code !='' ">
+                and code = #{code}
+            </if>
+            <if test="name != null and name !='' ">
+                and "name" ILIKE CONCAT('%' || #{name} || '%')
+            </if>
+        </where>
+
+        ORDER BY "date" DESC
+
+        <if test="limit >0">
+            OFFSET (#{page} - 1) * #{limit} FETCH NEXT #{limit} ROWS ONLY
+        </if>
+    </select>
+
+    <select id="countTicket" parameterType="com.example.kios.model.request.TicketRequest" resultType="Integer">
+        select count(*) from ticket
+        <where>
+            <if test="phone != null and phone !='' ">
+                and phone = #{phone}
+            </if>
+            <if test="code != null and code !='' ">
+                and code = #{code}
+            </if>
+            <if test="name != null and name !='' ">
+                and "name" ILIKE CONCAT('%' || #{name} || '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="create" parameterType="com.example.kios.model.request.TicketRequest"
+            resultType="com.example.kios.model.response.TicketResponse">
+        INSERT INTO ticket(
+            "name",
+            phone,
+            "date",
+            "time",
+            service_id,
+            employee_id,
+            code,
+            stt
+        )VALUES(
+            #{name},
+            #{phone},
+            #{date},
+            #{time},
+            #{serviceId},
+            #{employeeId},
+            #{code},
+            #{stt}
+        )
+        RETURNING *;
+    </select>
+
+    <update id="update" parameterType="com.example.kios.model.request.TicketRequest">
+        UPDATE ticket
+        SET
+            "name" = #{name},
+            phone = #{phone},
+            service_id = #{serviceId},
+            employee_id = #{employeeId},
+            attitude = #{attitude},
+            comment = #{comment}
+        WHERE id = #{id}::uuid
+     </update>
+</mapper>
