@@ -8,5 +8,8 @@ import lombok.Setter;
 public class ServiceBankingResponse {
     private String id;
     private String name;
-    private String create_date;
+    private String image;
+    private String description;
+    private String editDate;
+    private String createDate;
 }

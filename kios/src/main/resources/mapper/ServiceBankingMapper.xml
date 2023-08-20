@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.kios.mapper.ServiceBankingMapper">
+    <select id="create" parameterType="com.example.kios.model.request.ServiceBankingRequest"
+            resultType="com.example.kios.model.response.ServiceBankingResponse">
+        INSERT INTO service_banking(
+            "name",
+            image,
+            description,
+            create_date
+        )VALUES(
+            #{name},
+            #{image},
+            #{description},
+            NOW()
+        )
+        RETURNING *;
+    </select>
+
+    <select id="get" parameterType="com.example.kios.model.request.ServiceBankingRequest"
+            resultType="com.example.kios.model.response.ServiceBankingResponse">
+        SELECT * FROM service_banking
+        <where>
+            <if test="name != null and name != '' ">
+                and "name" ILIKE CONCAT('%' || #{name} || '%')
+            </if>
+        </where>
+    </select>
+
+    <update id="update" parameterType="com.example.kios.model.request.ServiceBankingRequest">
+        UPDATE service_banking
+        SET
+            "name" = #{name},
+            "image" = #{image},
+            "description" = #{description},
+            edit_date = NOW()
+        WHERE id = #{id}::uuid
+    </update>
+
+    <delete id="delete" parameterType="com.example.kios.model.request.ServiceBankingRequest">
+        DELETE FROM service_banking
+        WHERE id = #{id}::uuid
+    </delete>
+</mapper>
+

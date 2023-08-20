@@ -8,6 +8,7 @@ import lombok.Setter;
 public class ServiceBankingRequest {
     private String id;
     private String name;
-    private String createDate;
+    private String image;
+    private String description;
 
 }
