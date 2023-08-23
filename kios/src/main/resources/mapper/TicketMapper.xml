@@ -100,4 +100,12 @@
             status = #{status}
         WHERE id = #{id}::uuid
      </update>
+
+    <update id="evaluate" parameterType="com.example.kios.model.request.TicketRequest">
+        UPDATE ticket
+        SET
+            attitude = #{attitude},
+            comment = #{comment}
+        WHERE id = #{id}::uuid
+     </update>
 </mapper>

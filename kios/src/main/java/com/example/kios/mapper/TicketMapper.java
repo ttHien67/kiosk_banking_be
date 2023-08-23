@@ -15,5 +15,7 @@ public interface TicketMapper {
 
     public int update(TicketRequest request);
 
+    public int evaluate(TicketRequest request);
+
     public int countTicket(TicketRequest request);
 }

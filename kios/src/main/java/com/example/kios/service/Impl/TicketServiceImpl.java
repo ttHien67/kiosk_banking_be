@@ -62,4 +62,19 @@ public class TicketServiceImpl implements ITicketService {
             return new BaseResponse("-1", "fail");
         }
     }
+
+    @Override
+    public BaseResponse evaluateTicket(TicketRequest request) {
+        try{
+
+            int result = mapper.evaluate(request);
+
+            if(result > 0){
+                return new BaseResponse(result, "0", "Update successfully");
+            }else return new BaseResponse("1", "Update failed");
+
+        }catch (Exception e){
+            return new BaseResponse("-1", "fail");
+        }
+    }
 }

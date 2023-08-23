@@ -31,4 +31,9 @@ public class TicketController {
         return new ResponseEntity<>(ticketService.updateTicket(request), HttpStatus.OK);
     }
 
+    @PostMapping(value = "/evaluateTicket", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<BaseResponse> evaluateTicket(@RequestBody TicketRequest request){
+        return new ResponseEntity<>(ticketService.evaluateTicket(request), HttpStatus.OK);
+    }
+
 }

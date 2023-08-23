@@ -11,4 +11,6 @@ public interface ITicketService {
 
     public BaseResponse updateTicket(TicketRequest request);
 
+    public BaseResponse evaluateTicket(TicketRequest request);
+
 }
