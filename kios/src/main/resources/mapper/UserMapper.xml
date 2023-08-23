@@ -2,8 +2,30 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.kios.mapper.UserMapper">
     <select id="finAccountByUsername" resultType="com.example.kios.model.response.UserResponse">
-        select * from "user"
-        where user_name = #{userName}
+        select *
+        from user_account
+        where username = #{userName}
         limit 1;
+    </select>
+
+    <select id="checkUsernameExistion" resultType="com.example.kios.model.response.UserResponse" parameterType="String">
+        select * from user_account
+        where username = #{userName}
+    </select>
+
+    <select id="createEmployeeAccount" parameterType="com.example.kios.model.request.EmployeeRequest"
+            resultType="com.example.kios.model.response.UserResponse">
+        INSERT INTO user_account (
+            "name",
+            username,
+            password,
+            role
+        )VALUES(
+            #{name},
+            #{userName},
+            #{password},
+            #{roleCode}
+        )
+        RETURNING *;
     </select>
 </mapper>

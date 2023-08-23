@@ -13,6 +13,8 @@ public interface ServiceBankingMapper {
 
     List<ServiceBankingResponse> get(ServiceBankingRequest request);
 
+    int countService(ServiceBankingRequest request);
+
     int update(ServiceBankingRequest request);
 
     int delete(ServiceBankingRequest request);

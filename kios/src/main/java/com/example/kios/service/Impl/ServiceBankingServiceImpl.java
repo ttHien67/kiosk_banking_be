@@ -36,8 +36,10 @@ public class ServiceBankingServiceImpl implements IServiceBankingService {
         try {
             List<ServiceBankingResponse> list = mapper.get(request);
 
+            int count = mapper.countService(request);
+
             if(list.size() > 0){
-                return new BaseResponse(list, "0", "get successfully");
+                return new BaseResponse(list, count, "0", "get successfully");
             }
             return new BaseResponse("1", "get failure");
         }catch (Exception e){

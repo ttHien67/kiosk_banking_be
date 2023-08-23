@@ -11,4 +11,7 @@ public class ServiceBankingRequest {
     private String image;
     private String description;
 
+    private int page;
+    private int limit;
+
 }

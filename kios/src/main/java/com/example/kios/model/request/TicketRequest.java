@@ -4,6 +4,8 @@ import com.example.kios.model.dto.Paging;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 public class TicketRequest extends Paging {
@@ -18,4 +20,7 @@ public class TicketRequest extends Paging {
     private String attitude;
     private String comment;
     private int stt;
+    private int status;
+
+    private String accountId;
 }

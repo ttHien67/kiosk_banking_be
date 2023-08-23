@@ -9,16 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.security.auth.message.AuthException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+@CrossOrigin
 @RestController
 @RequestMapping(value = "/auth")
 public class AuthController {
@@ -51,9 +49,7 @@ public class AuthController {
                 .setIssuedAt(new Date(timestamp))
                 .setExpiration(new Date(timestamp + Constants.TOKEN_VALIDITY))
                 .claim("name", user.getName())
-                .claim("email", user.getEmail())
-                .claim("address", user.getAddress())
-                .claim("roleCode", user.getRoleCode())
+                .claim("role", user.getRole())
                 .compact();
         Map<String, Object> map = new HashMap<>();
         map.put("token", token);

@@ -3,16 +3,32 @@
 <mapper namespace="com.example.kios.mapper.TicketMapper">
     <select id="get" parameterType="com.example.kios.model.request.TicketRequest"
             resultType="com.example.kios.model.response.TicketResponse">
-        SELECT * from ticket
+        SELECT ticket.*, employee.room
+        from ticket
+        LEFT JOIN employee ON ticket.employee_id = employee.id
+        LEFT JOIN service_banking ON ticket.service_id = service_banking.id
+
         <where>
             <if test="phone != null and phone !='' ">
-                and phone = #{phone}
+                and ticket.phone = #{phone}
             </if>
             <if test="code != null and code !='' ">
-                and code = #{code}
+                and ticket.code = #{code}
             </if>
             <if test="name != null and name !='' ">
-                and "name" ILIKE CONCAT('%' || #{name} || '%')
+                and ticket.name ILIKE CONCAT('%' || #{name} || '%')
+            </if>
+            <if test="date != null and date !='' ">
+                and TO_CHAR(ticket.date, 'yyyy-mm-dd') = #{date}
+            </if>
+            <if test="employeeId != null and employeeId !='' ">
+                and employee.id = #{employeeId}::uuid
+            </if>
+            <if test="serviceId != null and serviceId !='' ">
+                and service_banking.id = #{serviceId}::uuid
+            </if>
+            <if test="accountId != null and accountId !='' ">
+                and employee.account_id = #{accountId}::uuid
             </if>
         </where>
 
@@ -25,15 +41,27 @@
 
     <select id="countTicket" parameterType="com.example.kios.model.request.TicketRequest" resultType="Integer">
         select count(*) from ticket
+        LEFT JOIN employee ON ticket.employee_id = employee.id
+        LEFT JOIN service_banking ON ticket.service_id = service_banking.id
+
         <where>
             <if test="phone != null and phone !='' ">
-                and phone = #{phone}
+                and ticket.phone = #{phone}
             </if>
             <if test="code != null and code !='' ">
-                and code = #{code}
+                and ticket.code = #{code}
             </if>
             <if test="name != null and name !='' ">
-                and "name" ILIKE CONCAT('%' || #{name} || '%')
+                and ticket.name ILIKE CONCAT('%' || #{name} || '%')
+            </if>
+            <if test="date != null and date !='' ">
+                and TO_CHAR(ticket.date, 'yyyy-mm-dd') = #{date}
+            </if>
+            <if test="employeeId != null and employeeId !='' ">
+                and employee.id = #{employeeId}::uuid
+            </if>
+            <if test="serviceId != null and serviceId !='' ">
+                and service_banking.id = #{serviceId}::uuid
             </if>
         </where>
     </select>
@@ -69,8 +97,7 @@
             phone = #{phone},
             service_id = #{serviceId},
             employee_id = #{employeeId},
-            attitude = #{attitude},
-            comment = #{comment}
+            status = #{status}
         WHERE id = #{id}::uuid
      </update>
 </mapper>

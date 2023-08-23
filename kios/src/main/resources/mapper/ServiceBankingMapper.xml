@@ -25,6 +25,22 @@
                 and "name" ILIKE CONCAT('%' || #{name} || '%')
             </if>
         </where>
+
+        order by create_date DESC
+
+        <if test="limit > 0">
+            OFFSET (#{page} - 1) * #{limit} FETCH NEXT #{limit} ROWS ONLY
+        </if>
+    </select>
+
+    <select id="countService" parameterType="com.example.kios.model.request.ServiceBankingRequest"
+        resultType="Integer">
+        SELECT COUNT(*) FROM service_banking
+        <where>
+            <if test="name != null and name != '' ">
+                and "name" ILIKE CONCAT('%' || #{name} || '%')
+            </if>
+        </where>
     </select>
 
     <update id="update" parameterType="com.example.kios.model.request.ServiceBankingRequest">

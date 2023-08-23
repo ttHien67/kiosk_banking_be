@@ -9,10 +9,8 @@ public class UserRequest {
     private String id;
     private String name;
     private String userName;
-    private String email;
-    private String address;
     private String password;
-    private String roleCode;
+    private String role;
 
     public String getId() {
         return id;
@@ -38,22 +36,6 @@ public class UserRequest {
         this.userName = userName;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public String getPassword() {
         return password;
     }
@@ -62,11 +44,11 @@ public class UserRequest {
         this.password = password;
     }
 
-    public String getRoleCode() {
-        return roleCode;
+    public String getRole() {
+        return role;
     }
 
-    public void setRoleCode(String roleCode) {
-        this.roleCode = roleCode;
+    public void setRole(String role) {
+        this.role = role;
     }
 }

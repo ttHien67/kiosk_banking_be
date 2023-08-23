@@ -12,7 +12,7 @@ public class UserResponse {
     private String email;
     private String address;
     private String password;
-    private String roleCode;
+    private String role;
 
     public String getId() {
         return id;
@@ -62,11 +62,11 @@ public class UserResponse {
         this.password = password;
     }
 
-    public String getRoleCode() {
-        return roleCode;
+    public String getRole() {
+        return role;
     }
 
-    public void setRoleCode(String roleCode) {
-        this.roleCode = roleCode;
+    public void setRole(String role) {
+        this.role = role;
     }
 }

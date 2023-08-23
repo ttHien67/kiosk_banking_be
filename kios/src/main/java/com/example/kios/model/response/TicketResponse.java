@@ -17,4 +17,8 @@ public class TicketResponse {
     private String attitude;
     private String comment;
     private int stt;
+    private int status;
+
+//  get room field in employee table
+    private String room;
 }

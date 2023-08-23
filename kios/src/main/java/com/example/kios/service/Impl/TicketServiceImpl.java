@@ -23,7 +23,7 @@ public class TicketServiceImpl implements ITicketService {
 
             int count = mapper.countTicket(request);
 
-            if(list.size() > 0){
+            if(list.size() >= 0){
                 return new BaseResponse(list, count, "0", "get successfully");
             }else {
                 return new BaseResponse("1", "get failure");

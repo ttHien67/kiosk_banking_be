@@ -24,7 +24,7 @@ public class UserServiceImpl implements IUserService {
     public BaseResponse createUser(UserRequest request) {
         try{
             if (request == null || Strings.isNullOrEmpty(request.getName())
-                    || Strings.isNullOrEmpty(request.getUserName()) || Strings.isNullOrEmpty(request.getEmail())
+                    || Strings.isNullOrEmpty(request.getUserName())
                     || Strings.isNullOrEmpty(request.getPassword())) {
                 return new BaseResponse(String.valueOf(HttpStatus.BAD_REQUEST.value()),
                         "Fiels is requried");
