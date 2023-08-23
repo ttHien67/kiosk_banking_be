@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.kios.mapper.ScreenMapper">
+    <select id="get" parameterType="com.example.kios.model.request.ScreenRequest"
+            resultType="com.example.kios.model.response.ScreenResponse">
+        SELECT *, background_image as image FROM ui_info
+
+        <where>
+            <if test="name != null and name !='' ">
+                and name ILIKE CONCAT('%' || #{name} || '%')
+            </if>
+        </where>
+
+        ORDER BY create_date DESC
+
+        <if test="limit >0">
+            OFFSET (#{page} - 1) * #{limit} FETCH NEXT #{limit} ROWS ONLY
+        </if>
+    </select>
+
+    <select id="countScreen" parameterType="com.example.kios.model.request.ScreenRequest" resultType="Integer">
+        select count(*) from ui_info
+        <where>
+            <if test="name != null and name !='' ">
+                and name ILIKE CONCAT('%' || #{name} || '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="create" parameterType="com.example.kios.model.request.ScreenRequest"
+            resultType="com.example.kios.model.response.ScreenResponse">
+        INSERT INTO ui_info(
+            "name",
+            background_image,
+            start_date,
+            end_date,
+            start_time,
+            end_time,
+            create_date
+        )VALUES(
+            #{name},
+            #{image},
+            #{startDate},
+            #{endDate},
+            #{startTime},
+            #{endTime},
+            NOW()
+        )
+        RETURNING *;
+    </select>
+
+    <update id="update" parameterType="com.example.kios.model.request.ScreenRequest">
+        UPDATE ui_info
+        SET
+            "name" = #{name},
+            background_image = #{image},
+            start_date = #{startDate},
+            end_date = #{endDate},
+            start_time = #{startTime},
+            end_time = #{endTime},
+            edit_date = NOW()
+        WHERE id = #{id}::uuid
+     </update>
+</mapper>

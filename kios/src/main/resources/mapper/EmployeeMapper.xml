@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.kios.mapper.EmployeeMapper">
+    <select id="create" resultType="com.example.kios.model.response.EmployeeResponse"
+            parameterType="com.example.kios.model.request.EmployeeRequest">
+        INSERT INTO employee (
+            code,
+            "name",
+            room,
+            phone,
+            max_customer,
+            account_id,
+            create_date
+        )VALUES(
+            #{code},
+            #{name},
+            #{room},
+            #{phone},
+            #{maxCustomer},
+            #{accountId},
+            NOW()
+        ) RETURNING *;
+    </select>
+
+    <select id="getEmployee" resultType="com.example.kios.model.response.EmployeeResponse"
+            parameterType="com.example.kios.model.request.EmployeeRequest">
+        select employee.*
+        from employee
+        <where>
+            <if test="code !=null and code !=''">
+                employee.code = #{code}
+            </if>
+            <if test="name !=null and name !=''">
+                and employee.name ILIKE CONCAT('%' || #{name} || '%')
+            </if>
+            <if test="phone !=null and phone !=''">
+                and employee.phone = #{phone}
+            </if>
+            <if test="room !=null and room !=''">
+                and employee.room = #{room}
+            </if>
+        </where>
+
+        order by employee.create_date desc
+
+
+        <if test="limit > 0">
+            OFFSET (#{page} - 1) * #{limit} FETCH NEXT #{limit} ROWS ONLY
+        </if>
+    </select>
+
+    <select id="getEmployeeByRole" resultType="com.example.kios.model.response.EmployeeResponse"
+            parameterType="com.example.kios.model.request.EmployeeRequest">
+        select employee.*
+        from employee
+        LEFT JOIN employee_role ON employee.id = employee_role.employee_id
+        <where>
+            <if test="role !=null">
+                <foreach collection="role" item="item">
+                    and employee_role.service_id = #{item}
+                </foreach>
+            </if>
+        </where>
+
+        order by employee.create_date desc
+
+
+        <if test="limit > 0">
+            OFFSET (#{page} - 1) * #{limit} FETCH NEXT #{limit} ROWS ONLY
+        </if>
+    </select>
+
+    <select id="getAll" resultType="com.example.kios.model.response.EmployeeResponse">
+        select * from employee
+    </select>
+
+    <select id="countEmployee" parameterType="com.example.kios.model.request.EmployeeRequest"
+            resultType="integer">
+        select count(*) from employee
+        <where>
+            <if test="code !=null and code !=''">
+                employee.code = #{code}
+            </if>
+            <if test="name !=null and name !=''">
+                and employee.name ILIKE CONCAT('%' || #{name} || '%')
+            </if>
+            <if test="phone !=null and phone !=''">
+                and phone = #{phone}
+            </if>
+            <if test="room !=null and room !=''">
+                and room = #{room}
+            </if>
+        </where>
+    </select>
+
+    <update id="update" parameterType="com.example.kios.model.request.EmployeeRequest">
+        UPDATE employee
+        SET
+            "name" = #{name},
+            phone = #{phone},
+            room = #{room},
+            max_customer = #{maxCustomer}
+        WHERE id = #{id}::uuid
+    </update>
+
+<!--    <update id="updateTimeWork" parameterType="com.example.kios.model.request.BookingInfoRequest">-->
+<!--        UPDATE employee-->
+<!--        SET-->
+<!--            "date" = #{date},-->
+<!--            start_time = #{startTime},-->
+<!--            end_time = #{endTime}-->
+<!--        WHERE id = #{employeeId}::uuid-->
+<!--    </update>-->
+
+    <delete id="delete" parameterType="com.example.kios.model.request.EmployeeRequest">
+        DELETE FROM employee
+        WHERE id = #{id}::uuid
+    </delete>
+
+    <select id="checkInfo" parameterType="com.example.kios.model.request.EmployeeRequest"
+            resultType="integer">
+        select count(*) from employee
+        where code = #{code}
+    </select>
+</mapper>
