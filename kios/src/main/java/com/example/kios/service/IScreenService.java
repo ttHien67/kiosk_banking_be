@@ -11,4 +11,6 @@ public interface IScreenService {
 
     public BaseResponse updateScreen(ScreenRequest request);
 
+    public BaseResponse deleteScreen(ScreenRequest request);
+
 }

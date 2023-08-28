@@ -61,4 +61,25 @@
             edit_date = NOW()
         WHERE id = #{id}::uuid
      </update>
+
+    <delete id="delete" parameterType="com.example.kios.model.request.ScreenRequest">
+        DELETE FROM ui_info
+        WHERE id = #{id}::uuid
+     </delete>
+
+    <select id="checkDateExisted" parameterType="com.example.kios.model.request.ScreenRequest"
+            resultType="Integer">
+        SELECT COUNT(*)
+        FROM ui_info
+        WHERE DATE(start_date) between #{startDate} and #{endDate}
+            or DATE(end_date) between #{startDate} and #{endDate}
+    </select>
+
+    <select id="checkTimeExisted" parameterType="com.example.kios.model.request.ScreenRequest"
+            resultType="Integer">
+        SELECT count(*)
+        FROM ui_info
+        WHERE ( start_time BETWEEN #{startTime} AND #{endTime}
+        OR end_time BETWEEN #{startTime} AND #{endTime} ) and id != #{id}::uuid
+    </select>
 </mapper>

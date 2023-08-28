@@ -6,6 +6,7 @@ import com.example.kios.model.response.BaseResponse;
 import com.example.kios.model.response.TicketResponse;
 import com.example.kios.service.ITicketService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +16,13 @@ public class TicketServiceImpl implements ITicketService {
 
     @Autowired
     private TicketMapper mapper;
+
+
+    private SimpMessagingTemplate messagingTemplate;
+
+    public TicketServiceImpl(SimpMessagingTemplate template) {
+        this.messagingTemplate = template;
+    }
 
     @Override
     public BaseResponse getTicket(TicketRequest request) {
@@ -34,10 +42,27 @@ public class TicketServiceImpl implements ITicketService {
     }
 
     @Override
+    public BaseResponse getTicketForTV(TicketRequest request) {
+        try{
+            List<TicketResponse> list = mapper.getForTV(request);
+
+            if(list.size() >= 0){
+                return new BaseResponse(list, "0", "get successfully");
+            }else {
+                return new BaseResponse("1", "get failure");
+            }
+        }catch (Exception e){
+            return new BaseResponse("-1", "fail");
+        }
+    }
+
+    @Override
     public BaseResponse createTicket(TicketRequest request) {
         try{
 
             TicketResponse result = mapper.create(request);
+
+            messagingTemplate.convertAndSend("/topic/create", result);
 
             if(result != null){
                 return new BaseResponse(result, "0", "Create successfully");
@@ -49,10 +74,20 @@ public class TicketServiceImpl implements ITicketService {
     }
 
     @Override
+    public BaseResponse fakeCreateTicket(TicketRequest request) {
+
+        messagingTemplate.convertAndSend("/topic/create", request);
+
+        return new BaseResponse(request, "0", "Create successfully");
+    }
+
+    @Override
     public BaseResponse updateTicket(TicketRequest request) {
         try{
 
             int result = mapper.update(request);
+
+            messagingTemplate.convertAndSend("/topic/update", request);
 
             if(result > 0){
                 return new BaseResponse(result, "0", "Update successfully");

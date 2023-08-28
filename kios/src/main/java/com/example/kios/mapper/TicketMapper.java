@@ -13,6 +13,8 @@ public interface TicketMapper {
 
     public List<TicketResponse> get(TicketRequest request);
 
+    public List<TicketResponse> getForTV(TicketRequest request);
+
     public int update(TicketRequest request);
 
     public int evaluate(TicketRequest request);

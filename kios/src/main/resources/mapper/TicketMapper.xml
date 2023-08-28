@@ -39,6 +39,23 @@
         </if>
     </select>
 
+    <select id="getForTV" parameterType="com.example.kios.model.request.TicketRequest"
+            resultType="com.example.kios.model.response.TicketResponse">
+        SELECT ticket.*, employee.room
+        from ticket
+        LEFT JOIN employee ON ticket.employee_id = employee.id
+        LEFT JOIN service_banking ON ticket.service_id = service_banking.id
+
+        <where>
+            <if test="date != null and date !='' ">
+                and TO_CHAR(ticket.date, 'yyyy-mm-dd') = #{date}
+            </if>
+            and 2 > status
+        </where>
+        ORDER BY status DESC
+        limit 10
+    </select>
+
     <select id="countTicket" parameterType="com.example.kios.model.request.TicketRequest" resultType="Integer">
         select count(*) from ticket
         LEFT JOIN employee ON ticket.employee_id = employee.id
@@ -76,6 +93,7 @@
             service_id,
             employee_id,
             code,
+            status,
             stt
         )VALUES(
             #{name},
@@ -85,6 +103,7 @@
             #{serviceId},
             #{employeeId},
             #{code},
+            #{status},
             #{stt}
         )
         RETURNING *;

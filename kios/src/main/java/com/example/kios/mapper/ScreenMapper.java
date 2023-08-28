@@ -16,5 +16,11 @@ public interface ScreenMapper {
 
     public int update(ScreenRequest request);
 
+    public int delete(ScreenRequest request);
+
     public int countScreen(ScreenRequest request);
+
+    int checkDateExisted(ScreenRequest request);
+
+    int checkTimeExisted(ScreenRequest request);
 }

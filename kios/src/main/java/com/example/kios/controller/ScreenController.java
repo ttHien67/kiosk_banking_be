@@ -31,4 +31,9 @@ public class ScreenController {
         return new ResponseEntity<>(screenService.updateScreen(request), HttpStatus.OK);
     }
 
+    @PostMapping(value = "/deleteScreen", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<BaseResponse> deleteScreen(@RequestBody ScreenRequest request){
+        return new ResponseEntity<>(screenService.deleteScreen(request), HttpStatus.OK);
+    }
+
 }
