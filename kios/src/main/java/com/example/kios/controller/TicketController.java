@@ -53,6 +53,12 @@ public class TicketController {
         return new ResponseEntity<>(new BaseResponse("0", "success"), HttpStatus.OK);
     }
 
+    @SendTo("/topic/search-ticket-for-notification")
+    @PostMapping(value = "/searchTicketForNotification", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<BaseResponse> searchTicketForNotification(@RequestBody TicketRequest request){
+        messagingTemplate.convertAndSend("/topic/search-ticket-for-notification", request);
+        return new ResponseEntity<>(new BaseResponse("0", "success"), HttpStatus.OK);
+    }
 
     @SendTo("/topic/update")
     @PostMapping(value = "/updateTicket", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)

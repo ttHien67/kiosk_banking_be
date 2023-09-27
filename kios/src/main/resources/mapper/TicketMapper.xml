@@ -21,6 +21,9 @@
             <if test="date != null and date !='' ">
                 and TO_CHAR(ticket.date, 'yyyy-mm-dd') = #{date}
             </if>
+            <if test="time != null and date !='' ">
+                and TO_CHAR(ticket.time, 'HH24:MI:SS') = #{time}
+            </if>
             <if test="employeeId != null and employeeId !='' ">
                 and employee.id = #{employeeId}::uuid
             </if>
@@ -73,6 +76,9 @@
             </if>
             <if test="date != null and date !='' ">
                 and TO_CHAR(ticket.date, 'yyyy-mm-dd') = #{date}
+            </if>
+            <if test="time != null and date !='' ">
+                and TO_CHAR(ticket.time, 'HH24:MI:SS') = #{time}
             </if>
             <if test="employeeId != null and employeeId !='' ">
                 and employee.id = #{employeeId}::uuid

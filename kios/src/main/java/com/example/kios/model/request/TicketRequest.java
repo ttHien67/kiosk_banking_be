@@ -17,7 +17,7 @@ public class TicketRequest extends Paging {
     private String serviceId;
     private String employeeId;
     private String code;
-    private String attitude;
+    private int attitude;
     private String comment;
     private int stt;
     private int status;
