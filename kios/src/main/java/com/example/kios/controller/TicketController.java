@@ -40,7 +40,6 @@ public class TicketController {
         return new ResponseEntity<>(ticketService.createTicket(request), HttpStatus.OK);
     }
 
-    @SendTo("/topic/create")
     @PostMapping(value = "/fakeCreateTicket", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BaseResponse> fakeCreateTicket(@RequestBody TicketRequest request){
         return new ResponseEntity<>(ticketService.fakeCreateTicket(request), HttpStatus.OK);
@@ -69,6 +68,21 @@ public class TicketController {
     @PostMapping(value = "/evaluateTicket", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BaseResponse> evaluateTicket(@RequestBody TicketRequest request){
         return new ResponseEntity<>(ticketService.evaluateTicket(request), HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/statisticMonthly", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<BaseResponse> statisticMonthly(@RequestBody TicketRequest request){
+        return new ResponseEntity<>(ticketService.statisticMonthly(request), HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/getCountTicket", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<BaseResponse> getCountTicket(@RequestBody TicketRequest request){
+        return new ResponseEntity<>(ticketService.getCountTicket(request), HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/getTicketDataForEmployee", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<BaseResponse> getTicketDataForEmployee(@RequestBody TicketRequest request){
+        return new ResponseEntity<>(ticketService.getTicketDataForEmployee(request), HttpStatus.OK);
     }
 
 }

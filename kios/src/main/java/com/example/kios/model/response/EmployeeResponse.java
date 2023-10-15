@@ -14,10 +14,21 @@ public class EmployeeResponse {
     private String room;
     private String phone;
 
+    private int sumService;
+
+
     //    create account
     private String password;
     private String roleCode;
     private String userName;
+
+    public int getSumService() {
+        return sumService;
+    }
+
+    public void setSumService(int sumService) {
+        this.sumService = sumService;
+    }
 
     public String getCreateDate() {
         return createDate;

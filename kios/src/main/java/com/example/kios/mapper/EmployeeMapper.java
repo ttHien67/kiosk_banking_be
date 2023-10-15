@@ -25,4 +25,6 @@ public interface EmployeeMapper {
     public int countEmployee(EmployeeRequest request);
 
     public int checkInfo(EmployeeRequest request);
+
+    String getAccountId(String employeeId);
 }

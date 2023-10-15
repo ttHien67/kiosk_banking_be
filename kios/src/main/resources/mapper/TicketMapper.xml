@@ -86,6 +86,9 @@
             <if test="serviceId != null and serviceId !='' ">
                 and service_banking.id = #{serviceId}::uuid
             </if>
+            <if test="accountId != null and accountId !='' ">
+                and employee.account_id = #{accountId}::uuid
+            </if>
         </where>
     </select>
 
@@ -133,4 +136,62 @@
             comment = #{comment}
         WHERE id = #{id}::uuid
      </update>
+
+    <select id="statisticTicketDone" parameterType="String" resultType="Integer">
+        SELECT COUNT(*) FROM ticket
+        WHERE TO_CHAR("date", 'yyyy-mm') = CONCAT(CAST(EXTRACT(YEAR FROM CURRENT_DATE) AS VARCHAR) || '-' || #{month})
+        AND status = 2
+    </select>
+
+    <select id="statisticTicketInProgress" parameterType="String" resultType="Integer">
+        SELECT COUNT(*) FROM ticket
+        WHERE TO_CHAR("date", 'yyyy-mm') = CONCAT(CAST(EXTRACT(YEAR FROM CURRENT_DATE) AS VARCHAR) || '-' || #{month})
+        AND status = 1
+    </select>
+
+    <select id="statisticTicketNotStart" parameterType="String" resultType="Integer">
+        SELECT COUNT(*) FROM ticket
+        WHERE TO_CHAR("date", 'yyyy-mm') = CONCAT(CAST(EXTRACT(YEAR FROM CURRENT_DATE) AS VARCHAR) || '-' || #{month})
+        AND status != 1 AND status != 2
+    </select>
+
+    <select id="countDoneTicket" parameterType="com.example.kios.model.request.TicketRequest" resultType="Integer">
+        SELECT COUNT(*) FROM ticket
+        WHERE status = 2
+    </select>
+
+    <select id="countInProgressTicket" parameterType="com.example.kios.model.request.TicketRequest" resultType="Integer">
+        SELECT COUNT(*) FROM ticket
+        WHERE status = 1
+    </select>
+
+    <select id="countNotStartTicket" parameterType="com.example.kios.model.request.TicketRequest" resultType="Integer">
+        SELECT COUNT(*) FROM ticket
+        WHERE status = 0
+    </select>
+
+    <select id="statisticEmployee"
+            resultType="com.example.kios.model.response.EmployeeResponse">
+        select employee.*, count(*) as sumService
+        from ticket
+        left join employee on ticket.employee_id = employee.id
+        left join user_account on employee.account_id = user_account.id
+        <where>
+            <if test="date != null and date != ''">
+                and ticket.date = #{date}
+            </if>
+            <if test="month != null and month != ''">
+                and TO_CHAR(ticket.date, 'yyyy-mm') = #{month}
+            </if>
+            <if test="year != null and year != ''">
+                and TO_CHAR(ticket.date, 'yyyy') = #{year}
+            </if>
+            and ticket.status = 2
+            and user_account.role = 'EMPLOYEE'
+            and employee.id = #{id}::uuid
+        </where>
+        group by employee.id;
+    </select>
+
+
 </mapper>

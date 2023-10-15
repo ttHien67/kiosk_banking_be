@@ -17,4 +17,10 @@ public interface ITicketService {
 
     public BaseResponse evaluateTicket(TicketRequest request);
 
+    public BaseResponse statisticMonthly(TicketRequest request);
+
+    public BaseResponse getCountTicket(TicketRequest request);
+
+    public BaseResponse getTicketDataForEmployee(TicketRequest request);
+
 }

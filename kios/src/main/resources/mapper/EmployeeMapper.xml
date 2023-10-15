@@ -72,6 +72,8 @@
 
     <select id="getAll" resultType="com.example.kios.model.response.EmployeeResponse">
         select * from employee
+        left join user_account on employee.account_id = user_account.id
+        where user_account.role = 'EMPLOYEE'
     </select>
 
     <select id="countEmployee" parameterType="com.example.kios.model.request.EmployeeRequest"
@@ -121,5 +123,10 @@
             resultType="integer">
         select count(*) from employee
         where code = #{code}
+    </select>
+
+    <select id="getAccountId" resultType="String" parameterType="String">
+        select account_id from employee
+        where id = #{employeeId}
     </select>
 </mapper>
