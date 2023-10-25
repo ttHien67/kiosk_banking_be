@@ -3,6 +3,8 @@ package com.example.kios.service;
 import com.example.kios.model.request.TicketRequest;
 import com.example.kios.model.response.BaseResponse;
 
+import java.io.File;
+
 
 public interface ITicketService {
     public BaseResponse getTicket(TicketRequest request);
@@ -22,5 +24,7 @@ public interface ITicketService {
     public BaseResponse getCountTicket(TicketRequest request);
 
     public BaseResponse getTicketDataForEmployee(TicketRequest request);
+
+    File export(TicketRequest request);
 
 }

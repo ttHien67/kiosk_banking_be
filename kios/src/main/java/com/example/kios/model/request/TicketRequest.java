@@ -29,6 +29,16 @@ public class TicketRequest extends Paging {
 
     private String accountId;
 
+//    export
+    private String fileType;
+
+    public String getFileType() {
+        return fileType;
+    }
+
+    public void setFileType(String fileType) {
+        this.fileType = fileType;
+    }
 
     public String getId() {
         return id;

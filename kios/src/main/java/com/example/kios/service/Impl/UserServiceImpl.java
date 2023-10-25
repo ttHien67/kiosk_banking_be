@@ -59,7 +59,7 @@ public class UserServiceImpl implements IUserService {
         try{
             UserResponse user = mapper.finAccountByUsername(userName);
 
-            if(user == null || !BCrypt.checkpw(password, user.getPassword())) {
+            if(!BCrypt.checkpw(password, user.getPassword())) {
                 return null;
             }
             user.setPassword(null);

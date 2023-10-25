@@ -77,6 +77,17 @@
             <version>0.0.20131108.vaadin1</version>
             <scope>compile</scope>
         </dependency>
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports</artifactId>
+			<version>6.17.0</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.bouncycastle</groupId>
+					<artifactId>bcprov-jdk15on</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
     </dependencies>
 
 	<build>

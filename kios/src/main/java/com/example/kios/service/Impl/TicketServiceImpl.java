@@ -7,10 +7,17 @@ import com.example.kios.model.response.BaseResponse;
 import com.example.kios.model.response.EmployeeResponse;
 import com.example.kios.model.response.TicketResponse;
 import com.example.kios.service.ITicketService;
+import com.example.kios.utils.ExportUtil;
+import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -205,6 +212,31 @@ public class TicketServiceImpl implements ITicketService {
             return baseResponse;
         }
         return baseResponse;
+    }
+
+    @Override
+    public File export(TicketRequest request) {
+        File file = null;
+        try {
+            file = File.createTempFile("out", ".tmp");
+            file.deleteOnExit();
+            Resource resource = new ClassPathResource("templates/ticket.jasper");
+            try (FileOutputStream fos = new FileOutputStream(file);
+                 InputStream inputStream = resource.getInputStream()) {
+                List<TicketResponse> list = mapper.get(request);
+                if (!list.isEmpty()) {
+                    list.add(0, new TicketResponse());
+                }
+                Map<String, Object> parameters = new HashMap<>();
+                parameters.put("language", "");
+                ExportUtil.exportReport(inputStream, fos, parameters, list, request.getFileType());
+            } catch (Exception e) {
+                throw new ServiceException(e.getMessage());
+            }
+        } catch (Exception e) {
+            throw new ServiceException(e.getMessage());
+        }
+        return file;
     }
 
 
