@@ -8,6 +8,7 @@ import com.example.kios.model.response.BaseResponse;
 import com.example.kios.model.response.EmployeeResponse;
 import com.example.kios.model.response.RoleResponse;
 import com.example.kios.model.response.UserResponse;
+import com.example.kios.service.ICommonService;
 import com.example.kios.service.IEmployeeService;
 import com.google.common.base.Strings;
 import org.mindrot.jbcrypt.BCrypt;
@@ -27,6 +28,9 @@ public class EmployeeServiceImpl implements IEmployeeService {
 
     @Autowired
     private RoleMapper roleMapper;
+
+    @Autowired
+    private ICommonService commonService;
 
     public BaseResponse getEmployee(EmployeeRequest request) {
         BaseResponse baseResponse = new BaseResponse();
@@ -117,12 +121,13 @@ public class EmployeeServiceImpl implements IEmployeeService {
 
     public BaseResponse createEmployee(EmployeeRequest request) {
         BaseResponse baseResponse = new BaseResponse();
+        int index = 0;
         try{
-            int checkEmployeeCode = mapper.checkInfo(request);
+//            int checkEmployeeCode = mapper.checkInfo(request);
 
-            if(checkEmployeeCode > 0) {
-                return new BaseResponse("1", "Employee code has be use");
-            }
+//            if(checkEmployeeCode > 0) {
+//                return new BaseResponse("1", "Employee code has be use");
+//            }
 
 //            create account
             if (request == null || Strings.isNullOrEmpty(request.getName())
@@ -147,6 +152,12 @@ public class EmployeeServiceImpl implements IEmployeeService {
             }else {
                 return new BaseResponse("1", "Create failed");
             }
+
+            String code = "EMP-";
+            int getId = mapper.getId() + index;
+            String pad = commonService.padLeft(String.valueOf(getId), 4, "0");
+
+            request.setCode(code + pad);
 
             EmployeeResponse result = mapper.create(request);
             if(result != null) {

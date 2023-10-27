@@ -38,14 +38,14 @@
 		<band splitType="Stretch"/>
 	</background>
 	<pageHeader>
-		<band height="35" splitType="Stretch">
-			<textField>
-				<reportElement x="90" y="0" width="740" height="30" uuid="d7dcc126-8a7c-4b2e-a052-42c98c757dd6"/>
+		<band height="49" splitType="Stretch">
+			<staticText>
+				<reportElement x="160" y="10" width="620" height="39" uuid="db687a3b-848d-4ce3-91e9-07a8237367f4"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Times New Roman" size="19" isBold="true"/>
+					<font fontName="Times New Roman" size="18" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA["BÁO CÁO CHI TIẾT GIAO DỊCH NGÂN HÀNG"]]></textFieldExpression>
-			</textField>
+				<text><![CDATA[BÁO CÁO CHI TIẾT GIAO DỊCH NGÂN HÀNG]]></text>
+			</staticText>
 		</band>
 	</pageHeader>
 	<detail>

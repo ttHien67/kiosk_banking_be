@@ -129,4 +129,8 @@
         select account_id from employee
         where id = #{employeeId}
     </select>
+
+    <select id="getId" resultType="Integer">
+        SELECT COUNT(*) + 1 FROM employee
+    </select>
 </mapper>
