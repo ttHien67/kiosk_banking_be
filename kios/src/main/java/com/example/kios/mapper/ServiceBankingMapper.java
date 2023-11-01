@@ -18,4 +18,8 @@ public interface ServiceBankingMapper {
     int update(ServiceBankingRequest request);
 
     int delete(ServiceBankingRequest request);
+
+    int restore(ServiceBankingRequest request);
+
+    int remove(ServiceBankingRequest request);
 }

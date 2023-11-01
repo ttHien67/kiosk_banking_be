@@ -10,6 +10,9 @@ public class ServiceBankingRequest {
     private String name;
     private String image;
     private String description;
+    private int deleted;
+    private String deletedDate;
+    private String restoreDate;
 
     private int page;
     private int limit;

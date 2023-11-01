@@ -10,6 +10,7 @@
             phone,
             max_customer,
             account_id,
+            deleted,
             create_date
         )VALUES(
             #{code},
@@ -18,6 +19,7 @@
             #{phone},
             #{maxCustomer},
             #{accountId},
+            0,
             NOW()
         ) RETURNING *;
     </select>
@@ -38,6 +40,12 @@
             </if>
             <if test="room !=null and room !=''">
                 and employee.room = #{room}
+            </if>
+            <if test="deletedDate != null and deletedDate != ''">
+                and TO_CHAR(deleted_date, 'yyyy-mm-dd') = #{deletedDate}
+            </if>
+            <if test="deleted != null">
+                and deleted = #{deleted}
             </if>
         </where>
 
@@ -60,6 +68,8 @@
                     and employee_role.service_id = #{item}
                 </foreach>
             </if>
+
+            and deleted != 1 or deleted IS NULL
         </where>
 
         order by employee.create_date desc
@@ -73,7 +83,7 @@
     <select id="getAll" resultType="com.example.kios.model.response.EmployeeResponse">
         select * from employee
         left join user_account on employee.account_id = user_account.id
-        where user_account.role = 'EMPLOYEE'
+        where user_account.role = 'EMPLOYEE' and deleted != 1 or deleted IS NULL
     </select>
 
     <select id="countEmployee" parameterType="com.example.kios.model.request.EmployeeRequest"
@@ -91,6 +101,12 @@
             </if>
             <if test="room !=null and room !=''">
                 and room = #{room}
+            </if>
+            <if test="deletedDate != null and deletedDate != ''">
+                and TO_CHAR(deleted_date, 'yyyy-mm-dd') = #{deletedDate}
+            </if>
+            <if test="deleted != null">
+                and deleted = #{deleted}
             </if>
         </where>
     </select>
@@ -115,7 +131,10 @@
 <!--    </update>-->
 
     <delete id="delete" parameterType="com.example.kios.model.request.EmployeeRequest">
-        DELETE FROM employee
+        UPDATE employee
+        SET
+            deleted = #{deleted},
+            deleted_date = NOW()
         WHERE id = #{id}::uuid
     </delete>
 
@@ -127,10 +146,23 @@
 
     <select id="getAccountId" resultType="String" parameterType="String">
         select account_id from employee
-        where id = #{employeeId}
+        where id = #{employeeId} and deleted != 1 or deleted IS NULL
     </select>
 
     <select id="getId" resultType="Integer">
         SELECT COUNT(*) + 1 FROM employee
     </select>
+
+    <update id="restore" parameterType="com.example.kios.model.request.EmployeeRequest">
+        UPDATE employee
+        SET
+            deleted = 0,
+            restore_date = NOW()
+        WHERE id = #{id}::uuid
+    </update>
+
+    <delete id="remove" parameterType="com.example.kios.model.request.EmployeeRequest">
+        DELETE FROM employee
+        WHERE id = #{id}::uuid
+    </delete>
 </mapper>

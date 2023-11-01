@@ -42,4 +42,14 @@ public class EmployeeController {
     public ResponseEntity<BaseResponse> createEmployee(@RequestBody EmployeeRequest request){
         return new ResponseEntity<>(employeeService.createEmployee(request), HttpStatus.OK);
     }
+
+    @PostMapping(value = "/restoreEmployee", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<BaseResponse> restoreEmployee(@RequestBody EmployeeRequest request){
+        return new ResponseEntity<>(employeeService.restoreEmployee(request), HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/removeEmployee", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<BaseResponse> removeEmployee(@RequestBody EmployeeRequest request){
+        return new ResponseEntity<>(employeeService.removeEmployee(request), HttpStatus.OK);
+    }
 }

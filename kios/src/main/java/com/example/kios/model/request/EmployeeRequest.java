@@ -12,6 +12,8 @@ public class EmployeeRequest {
     private String accountId;
     private String room;
     private String phone;
+    private int deleted;
+    private String deletedDate;
 
 //    create account
     private String password;
@@ -22,12 +24,28 @@ public class EmployeeRequest {
     private int limit;
     private int page;
 
+    public String getDeletedDate() {
+        return deletedDate;
+    }
+
+    public void setDeletedDate(String deletedDate) {
+        this.deletedDate = deletedDate;
+    }
+
     public String getPhone() {
         return phone;
     }
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public int getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(int deleted) {
+        this.deleted = deleted;
     }
 
     public String getCreateDate() {

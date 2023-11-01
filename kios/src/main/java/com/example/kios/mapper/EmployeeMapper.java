@@ -29,4 +29,8 @@ public interface EmployeeMapper {
     String getAccountId(String employeeId);
 
     int getId();
+
+    int restore(EmployeeRequest request);
+
+    int remove(EmployeeRequest request);
 }

@@ -13,4 +13,9 @@ public interface IServiceBankingService {
     public BaseResponse updateService(ServiceBankingRequest request);
 
     public BaseResponse deleteService(ServiceBankingRequest request);
+
+    public BaseResponse restoreService(ServiceBankingRequest request);
+
+    public BaseResponse removeService(ServiceBankingRequest request);
+
 }

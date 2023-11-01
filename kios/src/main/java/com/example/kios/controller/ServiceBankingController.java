@@ -40,4 +40,14 @@ public class ServiceBankingController {
         return new ResponseEntity<>(serviceBankingService.deleteService(request), HttpStatus.OK);
     }
 
+    @PostMapping(value = "/restoreService", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<BaseResponse> restoreService(@RequestBody ServiceBankingRequest request){
+        return new ResponseEntity<>(serviceBankingService.restoreService(request), HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/removeService", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<BaseResponse> removeService(@RequestBody ServiceBankingRequest request){
+        return new ResponseEntity<>(serviceBankingService.removeService(request), HttpStatus.OK);
+    }
+
 }

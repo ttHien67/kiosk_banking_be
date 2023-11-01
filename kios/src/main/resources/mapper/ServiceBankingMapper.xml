@@ -7,11 +7,13 @@
             "name",
             image,
             description,
+            deleted,
             create_date
         )VALUES(
             #{name},
             #{image},
             #{description},
+            0,
             NOW()
         )
         RETURNING *;
@@ -23,6 +25,12 @@
         <where>
             <if test="name != null and name != '' ">
                 and "name" ILIKE CONCAT('%' || #{name} || '%')
+            </if>
+            <if test="deleted != null">
+                and deleted = #{deleted}
+            </if>
+            <if test="deletedDate !=null and deletedDate != ''">
+                and TO_CHAR(deleted_date, 'yyyy-MM-dd')  = #{deletedDate}
             </if>
         </where>
 
@@ -40,6 +48,12 @@
             <if test="name != null and name != '' ">
                 and "name" ILIKE CONCAT('%' || #{name} || '%')
             </if>
+            <if test="deleted != null">
+                and deleted = #{deleted}
+            </if>
+            <if test="deletedDate !=null and deletedDate != ''">
+                and TO_CHAR(deleted_date, 'yyyy-mm-dd')  = #{deletedDate}
+            </if>
         </where>
     </select>
 
@@ -54,6 +68,22 @@
     </update>
 
     <delete id="delete" parameterType="com.example.kios.model.request.ServiceBankingRequest">
+        UPDATE service_banking
+        SET
+            deleted = #{deleted},
+            deleted_date = NOW()
+        WHERE id = #{id}::uuid
+    </delete>
+
+    <update id="restore" parameterType="com.example.kios.model.request.EmployeeRequest">
+        UPDATE service_banking
+        SET
+            deleted = 0,
+            restore_date = NOW()
+        WHERE id = #{id}::uuid
+    </update>
+
+    <delete id="remove" parameterType="com.example.kios.model.request.EmployeeRequest">
         DELETE FROM service_banking
         WHERE id = #{id}::uuid
     </delete>

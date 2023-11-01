@@ -16,5 +16,9 @@ public interface IEmployeeService {
 
     public BaseResponse createEmployee(EmployeeRequest request);
 
+    public BaseResponse restoreEmployee(EmployeeRequest request);
+
+    public BaseResponse removeEmployee(EmployeeRequest request);
+
 
 }

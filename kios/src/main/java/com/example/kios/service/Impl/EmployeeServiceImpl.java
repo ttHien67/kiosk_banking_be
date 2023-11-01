@@ -81,17 +81,13 @@ public class EmployeeServiceImpl implements IEmployeeService {
         BaseResponse baseResponse = new BaseResponse();
         try{
             int deleteOldRole = roleMapper.delete(request.getId());
-            if(deleteOldRole > 0){
+            int result = mapper.update(request);
 
-                int result = mapper.update(request);
-
-                if(result > 0) {
-                    EmployeeResponse roleResult = roleMapper.create(request);
-                    baseResponse = new BaseResponse(request, "0", "Update Successfully");
-                }else {
-                    baseResponse = new BaseResponse("1", "Update failure");
-                }
-
+            if(result > 0) {
+                EmployeeResponse roleResult = roleMapper.create(request);
+                baseResponse = new BaseResponse(request, "0", "Update Successfully");
+            }else {
+                baseResponse = new BaseResponse("1", "Update failure");
             }
 
         }catch (Exception e){
@@ -177,5 +173,35 @@ public class EmployeeServiceImpl implements IEmployeeService {
             return baseResponse;
         }
         return baseResponse;
+    }
+
+    @Override
+    public BaseResponse restoreEmployee(EmployeeRequest request) {
+        try{
+            int result = mapper.restore(request);
+
+            if(result > 0){
+                return new BaseResponse("0", "Restore successfully");
+            }else {
+                return new BaseResponse("1", "Restore failure");
+            }
+        }catch (Exception e) {
+            return new BaseResponse("-1", "Fail");
+        }
+    }
+
+    @Override
+    public BaseResponse removeEmployee(EmployeeRequest request) {
+        try{
+            int result = mapper.remove(request);
+
+            if(result > 0){
+                return new BaseResponse("0", "Remove successfully");
+            }else {
+                return new BaseResponse("1", "Remove failure");
+            }
+        }catch (Exception e) {
+            return new BaseResponse("-1", "Fail");
+        }
     }
 }

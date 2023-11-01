@@ -38,7 +38,7 @@ public class ServiceBankingServiceImpl implements IServiceBankingService {
 
             int count = mapper.countService(request);
 
-            if(list.size() > 0){
+            if(list != null){
                 return new BaseResponse(list, count, "0", "get successfully");
             }
             return new BaseResponse("1", "get failure");
@@ -74,4 +74,36 @@ public class ServiceBankingServiceImpl implements IServiceBankingService {
             return new BaseResponse("-1", "fail");
         }
     }
+
+    @Override
+    public BaseResponse restoreService(ServiceBankingRequest request) {
+        try{
+            int result = mapper.restore(request);
+
+            if(result > 0){
+                return new BaseResponse("0", "Restore successfully");
+            }else {
+                return new BaseResponse("1", "Restore failure");
+            }
+        }catch (Exception e) {
+            return new BaseResponse("-1", "Fail");
+        }
+    }
+
+    @Override
+    public BaseResponse removeService(ServiceBankingRequest request) {
+        try{
+            int result = mapper.remove(request);
+
+            if(result > 0){
+                return new BaseResponse("0", "Restore successfully");
+            }else {
+                return new BaseResponse("1", "Restore failure");
+            }
+        }catch (Exception e) {
+            return new BaseResponse("-1", "Fail");
+        }
+    }
+
+
 }
