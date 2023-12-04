@@ -4,6 +4,8 @@ import com.example.kios.model.dto.Paging;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.File;
+
 @Getter
 @Setter
 public class ScreenRequest extends Paging {

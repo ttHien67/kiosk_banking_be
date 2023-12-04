@@ -11,7 +11,7 @@
             create_date
         )VALUES(
             #{name},
-            #{image},
+            #{imageByte},
             #{description},
             0,
             NOW()
@@ -21,7 +21,7 @@
 
     <select id="get" parameterType="com.example.kios.model.request.ServiceBankingRequest"
             resultType="com.example.kios.model.response.ServiceBankingResponse">
-        SELECT * FROM service_banking
+        SELECT *, image as imageByte FROM service_banking
         <where>
             <if test="name != null and name != '' ">
                 and "name" ILIKE CONCAT('%' || #{name} || '%')
@@ -61,7 +61,7 @@
         UPDATE service_banking
         SET
             "name" = #{name},
-            "image" = #{image},
+            "image" = #{imageByte},
             "description" = #{description},
             edit_date = NOW()
         WHERE id = #{id}::uuid
