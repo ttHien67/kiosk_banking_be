@@ -193,5 +193,18 @@
         group by employee.id;
     </select>
 
+    <select id="countTicketForEmployee" resultType="com.example.kios.model.response.TicketResponse"
+            parameterType="com.example.kios.model.request.TicketRequest">
+        SELECT COUNT(*) as countService, ticket.employee_id
+        FROM ticket
+        <where>
+            <if test="date != null and date !='' ">
+                and TO_CHAR(ticket.date, 'yyyy-mm-dd') = #{date}
+            </if>
+            and 2 > status
+        </where>
+        group by employee_id
+    </select>
+
 
 </mapper>

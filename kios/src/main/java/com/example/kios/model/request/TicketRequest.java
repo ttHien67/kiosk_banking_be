@@ -23,7 +23,6 @@ public class TicketRequest extends Paging {
     private String comment;
     private int stt;
     private int status;
-
     private String month;
     private String year;
 

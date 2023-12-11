@@ -2,6 +2,7 @@ package com.example.kios.mapper;
 
 import com.example.kios.model.request.EmployeeRequest;
 import com.example.kios.model.response.EmployeeResponse;
+import com.example.kios.model.response.TicketResponse;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Service;
 

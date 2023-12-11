@@ -92,6 +92,11 @@ public class TicketController {
         return new ResponseEntity<>(ticketService.getTicketDataForEmployee(request), HttpStatus.OK);
     }
 
+    @PostMapping(value = "/countTicketForEmployee", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<BaseResponse> countTicketForEmployee(@RequestBody TicketRequest request){
+        return new ResponseEntity<>(ticketService.countTicketForEmployee(request), HttpStatus.OK);
+    }
+
     @PostMapping(value = "/export", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     public ResponseEntity<InputStreamResource> export(
             @RequestBody TicketRequest request) {

@@ -25,6 +25,8 @@ public interface ITicketService {
 
     public BaseResponse getTicketDataForEmployee(TicketRequest request);
 
+    public BaseResponse countTicketForEmployee(TicketRequest request);
+
     File export(TicketRequest request);
 
 }

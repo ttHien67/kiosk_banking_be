@@ -35,6 +35,8 @@ public interface TicketMapper {
 
     public int countDoneTicket(TicketRequest request);
 
+    List<TicketResponse> countTicketForEmployee(TicketRequest request);
+
     public EmployeeResponse statisticEmployee(@Param("id") String id, @Param("date")String date,
                                               @Param("month")String month, @Param("year")String year);
 }

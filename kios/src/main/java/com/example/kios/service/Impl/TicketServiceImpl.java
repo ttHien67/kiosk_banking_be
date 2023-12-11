@@ -214,6 +214,25 @@ public class TicketServiceImpl implements ITicketService {
         return baseResponse;
     }
 
+    public BaseResponse countTicketForEmployee(TicketRequest request) {
+        BaseResponse baseResponse = new BaseResponse();
+        try{
+
+            List<TicketResponse> list = mapper.countTicketForEmployee(request);
+
+            if(list != null) {
+                baseResponse = new BaseResponse(list, "0", "Successfully");
+            }else {
+                baseResponse = new BaseResponse("1", " failure");
+            }
+
+        }catch (Exception e){
+            baseResponse = new BaseResponse("1", "Failed");
+            return baseResponse;
+        }
+        return baseResponse;
+    }
+
     @Override
     public File export(TicketRequest request) {
         File file = null;
